@@ -12,38 +12,43 @@ def post_data(connection):
     cur = connection.cursor()
     cur.execute(sql['getNewReadings'])
     scansFromDB = cur.fetchall()
+    
+    if (len(scanFromDB)==0):
+        connection.commit()
+        return
 
     cur2 = connection.cursor()
     cur2.execute(sql['getBeacons'])
     beaconsFromDB = cur2.fetchall()
 
     body = {
-        "scans": [{"timestamp": scan['timestamp'], "mac": scan['mac'], "rssi": scan['rssi']} for scan in scansFromDB],
+        "scans": [{"timestamp": scan['timestamp'], "mac": scan['mac'], "rssi": scan['rssi'], "zone": conf['rpiZone']['name']} for scan in scansFromDB],
         "beacons": [db_beacon['mac'] for db_beacon in beaconsFromDB]
     }
 
     try:
         print('Sending: ' + str(len(scansFromDB)) + ' new scans')
-        r = requests.post(conf['api']['url'] + '/scans/bulk',
-                          headers={"Authorization": "Bearer " + conf['api']['token']},
+        r = requests.post(conf['api']['url'] + conf['api']['dirs']['beacon'],
+                          #headers={"Authorization": "Bearer " + conf['api']['token']},
+                          headers={"Content-Type": "application/json"},
                           json=body)
         print('Response: ' + str(r.status_code))
-        if r.status_code == 200:
+        if r.status_code == 201:
             for item in scansFromDB:
                 # Remove uploaded scans from DB
                 cur.execute(sql['deleteReading'], (item['id_Readings'],))
 
-            received_data = r.json()
-            add = received_data["add"]
-            remove = received_data["remove"]
+            #received_data = r.json()
+            #add = received_data["add"]
+            #remove = received_data["remove"]
 
             # Add Functionality
-            for mac in add:
-                cur.execute(sql['insertBeacon'], (mac,))
+            #for mac in add:
+            #    cur.execute(sql['insertBeacon'], (mac,))
 
             # Remove Functionality
-            for mac in remove:
-                cur.execute(sql['deleteBeacon'], (mac,))
+            #for mac in remove:
+            #    cur.execute(sql['deleteBeacon'], (mac,))
 
         else:
             try:
