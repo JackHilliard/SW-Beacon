@@ -1,0 +1,11 @@
+{
+  "db": "/home/pi/sw-database/smartward.sqlite",
+  "kvs": "/home/pi/sw-config/registry.kvs",
+  "api": {
+    "url": "https://tihm-iot-dev.ee.surrey.ac.uk:5001/api/1.0.0",
+    "token": "xxxxxxxxx.xxxxxxxxx.xxxxxx"
+  },
+  "scanInterval": 4,
+  "sendInterval": 20,
+  "retryInterval": 250
+}
