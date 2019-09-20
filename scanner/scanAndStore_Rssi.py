@@ -29,7 +29,7 @@ def save_data(connection):
     cur.execute(sql['getBeacons'])
     db_beacons = cur.fetchall()
     beacons = []
-    for db_beacon in range(db_beacons)):
+    for db_beacon in db_beacons:
         beacons.append(BLEBeacon(db_beacon['mac']))
     print('Scanning LE devices (' + str(conf['scanInterval']) + 's)')
     currentTime = time.time()
