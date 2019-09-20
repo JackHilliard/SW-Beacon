@@ -32,16 +32,18 @@ def save_data(connection):
     for db_beacon in range(db_beacons)):
         beacons.append(BLEBeacon(db_beacon['mac']))
     print('Scanning LE devices (' + str(conf['scanInterval']) + 's)')
-    discovered = scanner.scan(timeout=conf['scanInterval'])
-    print('Finished scanning. Saw: ' + str([dev.addr.upper() for dev in discovered if dev.addr.upper() in map(macsOnly, db_beacons)]))
-    for device in discovered:
-        dev_mac = device.addr.upper()
-        dev_rssi = device.rssi
-        for beacon in beacons:
-            if dev_mac == beacon.macAddr:
-                beacon.combRssi+=dev_rssi
-                beacon.countRssi+=1
-                break
+    currentTime = time.time()
+    while (time.time() <= currentTime + conf['averageInterval']):
+        discovered = scanner.scan(timeout=conf['scanInterval'])
+        print('Finished scanning. Saw: ' + str([dev.addr.upper() for dev in discovered if dev.addr.upper() in map(macsOnly, db_beacons)]))
+        for device in discovered:
+            dev_mac = device.addr.upper()
+            dev_rssi = device.rssi
+            for beacon in beacons:
+                if dev_mac == beacon.macAddr:
+                    beacon.combRssi+=dev_rssi
+                    beacon.countRssi+=1
+                    break
         
         #beacons = [db_beacon for db_beacon in db_beacons if db_beacon['mac'] == dev_mac]
     for beacon in beacons:
