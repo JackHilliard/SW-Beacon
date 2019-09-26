@@ -13,7 +13,7 @@ def retry_data(connection):
     cur.execute(sql['retryReadings'])
     scansFromDB = cur.fetchall()
     
-    if (len(scanFromDB)==0):
+    if (len(scansFromDB)==0):
         connection.commit()
         return
 
