@@ -1,5 +1,5 @@
 {
-  "db": "/jome/pi/sw-database/smartward.sqlite",
+  "db": "/home/pi/sw-database/smartward.sqlite",
   "kvs": "/home/pi/sw-config/registry.kvs",
   "api": {
     "url": "https://dri-test.surrey.ac.uk/admin/gateways/api/1.0.0",
@@ -7,6 +7,7 @@
     "dirs": {
       "beacon": "/scans/bulk",
       "energenie": "/sensordata"
+    }
   },
   "scanInterval": 2,
   "averageInterval": 15,
