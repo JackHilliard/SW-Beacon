@@ -23,6 +23,9 @@ cd /home/pi/
 #setup database:
 sudo mkdir sw-database
 mv /home/pi/sw-code/empty-db.sqlite /home/pi/sw-database/smartward.sqlite
+sudo sqlite3 sw-database/smartward.sqlite
+CREATE TABLE Beacon_Readings (id_Readings INTEGER PRIMARY KEY autoincrement, rssi INTEGER NOT NULL, mac_FK INTEGER NOT NULL, timestamp INTEGER NOT NULL, state TEXT DEFAULT 'NEW');
+CREATE TABLE Beacons (id INTEGER PRIMARY KEY autoincrement, mac TEXT NOT NULL, active TEXT DEFAULT 'TRUE');
 
 #move config file
 mv /home/pi/sw-code/example.config.json /home/pi/sw-config/config.json
