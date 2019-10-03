@@ -2,7 +2,7 @@
   "db": "/home/pi/sw-database/smartward.sqlite",
   "kvs": "/home/pi/sw-config/registry.kvs",
   "api": {
-    "url": "https://dri-test.surrey.ac.uk/admin/gateways/api/1.0.0",
+    "url": "https://dri-test.surrey.ac.uk/api/1.0.0",
     "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJyVVlFd1BVMCIsInN1YiI6IjVkOGI4MzlkM2ZhMzY0M2Y5MjllN2NmZSIsImlzcyI6IlVuaXZlcnNpdHkgT2YgU3VycmV5IiwidHlwZSI6IkdhdGV3YXkiLCJzY29wZSI6InNjYW46d3JpdGUgc2Vuc29yRGF0YTp3cml0ZSB4eXo6d3JpdGUiLCJpYXQiOjE1Njk0MjQyODUsImV4cCI6MTU4NTIwMzA4NX0.fzE82uS6nSp4WwyO__pZ28h8r2xwKE8w2ee-yOdefzF_PcOeos_H4g2Kx9-TlldPzREKlrWoKK0oBxDRDjDw-sSJBeRScocZzkCgqoEX8ICeYL7lPvJI5qAdwKZlIuOcSRa2BOQcqPZfQtLKYNAYcL5hssuSbYL1VldP63ad4ILlkSnxbn9frv7sf_3Fjmt87ih-HwuaCqaO2OLwHzRcSYXPIy2-p2-0F86s0DVemlgCg-L1EN3Bpjv458PT1FctBwEtWuy8y7zhhrFF1FD5SLuCjDVCq3-ZHcAmpx5Twbbh4NnjrsmV3-6oVFi8yjDR5RpveMBeh0dr90pocR1JCg",
     "dirs": {
       "beacon": "/scans/bulk",
