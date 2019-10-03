@@ -14,7 +14,8 @@ import signal
 '''
 
 class BLEBeacon:
-    def __init__(self, macAddr):
+    def __init__(self, id, macAddr):
+        self.id = id
         self.macAddr = macAddr
         self.combRssi = 0
         self.countRssi = 0
@@ -30,7 +31,7 @@ def save_data(connection):
     db_beacons = cur.fetchall()
     beacons = []
     for db_beacon in db_beacons:
-        beacons.append(BLEBeacon(db_beacon['mac']))
+        beacons.append(BLEBeacon(db_beacon['id'], db_beacon['mac']))
     print('Scanning LE devices (' + str(conf['scanInterval']) + 's)')
     currentTime = time.time()
     while (time.time() <= currentTime + conf['averageInterval']):
@@ -51,7 +52,7 @@ def save_data(connection):
             beacon.avgRssi = beacon.combRssi/beacon.countRssi
             now = int(round(time.time() * 1000))
             cur = connection.cursor()
-            cur.execute(sql['insertReading'], (beacon.avgRssi, now, 'NEW', beacon.macAddr))
+            cur.execute(sql['insertReading'], (beacon.avgRssi, now, 'NEW', beacon.id))
 
     try:
         connection.commit()
