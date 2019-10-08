@@ -1,5 +1,5 @@
 import sqlite3
-from config import conf
+from .config import conf
 
 
 class DB:
