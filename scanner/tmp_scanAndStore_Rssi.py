@@ -41,7 +41,6 @@ def save_data(connection):
         beacons.append(BLEBeacon(db_beacon['id'], db_beacon['mac']))
     print('Scanning LE devices (' + str(conf['scanInterval']) + 's)')
     currentTime = time.time()
-    #while (time.time() <= currentTime + conf['averageInterval']):
     for line in scanner.get_lines():
         if line:
             found_mac = line[14:][:12]
@@ -51,21 +50,20 @@ def save_data(connection):
             data = line[26:]
             #cycle through all the known beacons
             for x in range(len(beacons)):
-                if mac == beacons[x].macAddr and len(data) == 64:
+                if mac == beacons[x].macAddr:
                     #print(mac, data)
-                    if beacons[x].name in data:
-                        #average reading
-                        beacons[x].combRssi+=twos_comp(int(data[62:],16), 8)
-                        beacons[x].countRssi+=1
-                        break
+                    #average reading
+                    beacons[x].combRssi+=twos_comp(int(data[-2:],16), 8)
+                    beacons[x].countRssi+=1
+                    break
         if(time.time() >= currentTime + conf['averageInterval']): #if it goes 15 seconds timeout
             break
         
-        #beacons = [db_beacon for db_beacon in db_beacons if db_beacon['mac'] == dev_mac]
     scanner.stop()
     for beacon in beacons:
+        #print('Found:', beacon.macAddr, 'Count:', beacon.countRssi)
         if beacon.countRssi != 0:
-            beacon.avgRssi = beacon.combRssi/beacon.countRssi
+            beacon.avgRssi = round(beacon.combRssi/beacon.countRssi)
             now = int(round(time.time() * 1000))
             cur = connection.cursor()
             cur.execute(sql['insertReading'], (beacon.avgRssi, now, 'NEW', beacon.id))
