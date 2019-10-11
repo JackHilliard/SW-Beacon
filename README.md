@@ -9,14 +9,9 @@ sudo apt-get sqlite3
 sudo apt-get install pip
 sudo pip install requests
 sudo pip install lib
-sudo pip install requests
-sudo apt-get install libglib2.0-dev
-sudo pip install bluepy==1.1.1
-sudo apt-get install netatalk
+sudo apt-get install bluez-hcidump
 sudo apt-get install git build-essential libglib2.0-dev
 sudo apt-get install libcap2-bin
-sudo setcap 'cap_net_raw,cap_net_admin+eip' `which hcitool`
-sudo setcap 'cap_net_raw,cap_net_admin+eip' /usr/local/lib/python2.7/dist-packages/bluepy/bluepy-helper
 
 cd /home/pi/
 
