@@ -31,7 +31,7 @@ class BLEBeacon:
         self.avgRssi = 0
 
 def save_data(connection, timestamp):
-    now = int(round(timestamp * 1000)) 
+    now = int(round((timestamp+15) * 1000)) 
     scanner = BLEScanner()
     scanner.start()
     cur = connection.cursor()
@@ -81,4 +81,4 @@ def run():
     while conn:
         timeNow = time.time()
         if ((round(timeNow) % 15) == 0):
-            save_data(conn, timeNow)
+            save_data(conn, round(timeNow))
