@@ -30,7 +30,8 @@ class BLEBeacon:
         self.countRssi = 0
         self.avgRssi = 0
 
-def save_data(connection):
+def save_data(connection, timestamp):
+    now = int(round(timestamp * 1000)) 
     scanner = BLEScanner()
     scanner.start()
     cur = connection.cursor()
@@ -64,7 +65,7 @@ def save_data(connection):
         #print('Found:', beacon.macAddr, 'Count:', beacon.countRssi)
         if beacon.countRssi != 0:
             beacon.avgRssi = round(beacon.combRssi/beacon.countRssi)
-            now = int(round(time.time() * 1000))
+            #now = int(round(time.time() * 1000))
             cur = connection.cursor()
             cur.execute(sql['insertReading'], (beacon.avgRssi, now, 'NEW', beacon.id))
 
@@ -78,4 +79,6 @@ def save_data(connection):
 def run():
     conn = DB().getConn()
     while conn:
-        save_data(conn)
+        timeNow = time.time()
+        if ((round(timeNow) % 15) == 0):
+            save_data(conn, timeNow)
