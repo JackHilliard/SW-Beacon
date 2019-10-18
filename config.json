@@ -10,7 +10,7 @@
     }
   },
   "scanInterval": 2,
-  "averageInterval": 15,
+  "averageInterval": 12,
   "sendInterval": 60,
   "retryInterval": 250
 }
